@@ -28,15 +28,15 @@ public class GameMenu : MonoBehaviour
         {
             if(theMenu.activeInHierarchy)
             {
-                theMenu.SetActive(false);
-                GameManager.instance.gameMenuOpen = false;
+                CloseMenu();
             }
             else
             {
-                UpdateStats();
-                theMenu.SetActive(true);
-                GameManager.instance.gameMenuOpen = true;
+                OpenMenu();
             }
+        }
+        if(Input.GetKeyDown(KeyCode.Escape) && theMenu.activeInHierarchy){
+            CloseMenu();
         }
     }
 
@@ -49,6 +49,32 @@ public class GameMenu : MonoBehaviour
 
     public void ToggleWindow(int windowNumber)
     {
-        
+        for(int i = 0; i < windows.Length; i++)
+        {
+            if(i == windowNumber)
+            {
+                windows[i].SetActive(!windows[i].activeInHierarchy);
+            }else 
+            {
+                windows[i].SetActive(false);
+            }
+        }
+    }
+
+    public void CloseMenu()
+    {
+        theMenu.SetActive(false);
+        GameManager.instance.gameMenuOpen = false;
+        for(int i = 0; i < windows.Length; i++)
+        {
+            windows[i].SetActive(false);
+        }
+    }
+
+    public void OpenMenu()
+    {
+        UpdateStats();
+        theMenu.SetActive(true);
+        GameManager.instance.gameMenuOpen = true;
     }
 }
